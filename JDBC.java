@@ -1,3 +1,5 @@
+//Eric Palma
+//Daniel Gione
 package jdbc;
 import java.sql.*;
 
