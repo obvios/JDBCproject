@@ -1,5 +1,6 @@
 //Eric Palma
 //Daniel Gione
+//JDBC Project
 package jdbc;
 import java.sql.*;
 
