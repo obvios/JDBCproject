@@ -24,6 +24,9 @@ public class JDBC {
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
+            /*Display Menu*/
+            displayMenu();
+
             //STEP 3: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
@@ -71,4 +74,18 @@ public class JDBC {
         
     }
     
+}
+
+/*Display Menu*/
+static void displayMenu(){
+    System.out.println("Please choose one of the following:");
+    System.out.println("1: List all writing groups");
+    System.out.println("2: List specific writing group data");
+    System.out.println("3: List all publishers");
+    System.out.println("4: List specific publisher data");
+    System.out.println("5: List all book titles");
+    System.out.println("6: List data about a specific book");
+    System.out.println("7: Insert a new book into database");
+    System.out.println("8: Insert new publisher and change ownership");
+    System.out.println("9: Remove a specific book");
 }
