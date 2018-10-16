@@ -72,11 +72,9 @@ public class JDBC {
             }
         }
         
-    }
+    }//end of main
     
-}
-
-/*Display Menu*/
+    /*Display Menu*/
 static void displayMenu(){
     System.out.println("Please choose one of the following:");
     System.out.println("1: List all writing groups");
@@ -89,3 +87,5 @@ static void displayMenu(){
     System.out.println("8: Insert new publisher and change ownership");
     System.out.println("9: Remove a specific book");
 }
+
+}//End of program
