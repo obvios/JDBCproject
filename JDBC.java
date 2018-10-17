@@ -3,6 +3,8 @@
 //JDBC Project
 package jdbc;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JDBC {
     static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
@@ -11,10 +13,11 @@ public class JDBC {
     //  Database credentials
     static final String USER = "user1";
     static final String PASS = "pass1";
+    //connections
+    static Connection conn = null;
+    static Statement stmt = null;
     
     public static void main(String[] args) {
-        Connection conn = null;
-        Statement stmt = null;
         
         try{
             //STEP 1: Register JDBC driver
@@ -27,6 +30,8 @@ public class JDBC {
             /*Display Menu*/
             displayMenu();
 
+            //test1
+            listAllBooks();
             //STEP 3: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
@@ -86,6 +91,24 @@ static void displayMenu(){
     System.out.println("7: Insert a new book into database");
     System.out.println("8: Insert new publisher and change ownership");
     System.out.println("9: Remove a specific book");
+}
+
+//option 5
+public static void listAllBooks(){
+    
+        try {
+            String sql = "SELECT bookTitle FROM book";
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            while (rs.next()) {
+        	    String name = rs.getString("bookTitle");
+        	    System.out.println(name);
+        	}    
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 }
 
 
