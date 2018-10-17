@@ -93,7 +93,7 @@ static void displayMenu(){
     System.out.println("9: Remove a specific book");
 }
 
-//option 5
+/*option 5*/
 public static void listAllBooks(){
     
         try {
