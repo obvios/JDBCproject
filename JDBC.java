@@ -5,7 +5,7 @@ package jdbc;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.io.*;
 public class JDBC {
     static final String JDBC_DRIVER = "org.apache.derby.jdbc.ClientDriver";
     static final String DB_URL = "jdbc:derby://localhost:1527/JDBCdatabase";
@@ -16,9 +16,11 @@ public class JDBC {
     //connections
     static Connection conn = null;
     static Statement stmt = null;
-    
+    //buffered reader
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
     public static void main(String[] args) {
-        
+
         try{
             //STEP 1: Register JDBC driver
             Class.forName(JDBC_DRIVER);
@@ -68,7 +70,7 @@ public class JDBC {
                 if(stmt!=null)
                 stmt.close();
             }catch(SQLException se2){}
-            
+
             try{
                 if(conn!=null)
                 conn.close();
@@ -76,9 +78,9 @@ public class JDBC {
                 se.printStackTrace();
             }
         }
-        
+
     }//end of main
-    
+
     /*Display Menu*/
 static void displayMenu(){
     System.out.println("Please choose one of the following:");
@@ -95,21 +97,27 @@ static void displayMenu(){
 
 /*option 5*/
 public static void listAllBooks(){
-    
+
         try {
             String sql = "SELECT bookTitle FROM book";
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            
+
             while (rs.next()) {
         	    String name = rs.getString("bookTitle");
         	    System.out.println(name);
-        	}    
+        	}
         } catch (SQLException ex) {
             Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
 }
+
+/*option 6*/
+    public static listBook(){
+        System.out.println("Which book would you like more information on? ");
+        String book = reader.readLine();
+    }
 
 
 //first 4 : daniel
