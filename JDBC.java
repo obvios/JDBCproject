@@ -88,4 +88,8 @@ static void displayMenu(){
     System.out.println("9: Remove a specific book");
 }
 
+
+//first 4 : daniel
+//last 5 : eric
+
 }//End of program
