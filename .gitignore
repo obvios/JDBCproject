@@ -1,3 +1,4 @@
 *.xml
 *.properties
 *.mf
+/JDBC/nbproject/private/
