@@ -96,13 +96,17 @@ public static void listAllBooks(){
 /*option 6*/
     public static void listBook() throws IOException{
         try {
-            String sql = "Select booktitle,yearpublished,numberpages,groupname,publishername from book where booktitle = ?";
+            String sql = "Select booktitle,yearpublished,numberpages,groupname,publishername from book where booktitle = ? and "
+                    + "groupname = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             
             System.out.println("Which book would you like more information on? ");
             String book = reader.readLine();
+            System.out.print("Specify Writing group name: ");
+            String groupName = reader.readLine();
             
             pstmt.setString(1, book);
+            pstmt.setString(2, groupName);
             ResultSet rs = pstmt.executeQuery();
             
             while (rs.next()) {
