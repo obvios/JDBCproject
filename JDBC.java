@@ -33,8 +33,6 @@ public class JDBC {
             displayMenu();
                         
             //STEP 5: Clean-up environment
-           // rs.close();
-           //stmt.close();
             conn.close();
         }catch(SQLException se){
             se.printStackTrace();
