@@ -72,6 +72,27 @@ static void displayMenu(){
     System.out.println("9: Remove a specific book");
 }
 
+/*Option 1*/
+public static void listAllWritingGroups(){
+    
+}
+
+/*Option 2*/
+public static void listWritingGroup(){
+    
+}
+
+
+/*Option 3*/
+public static void listAllPublishers(){
+    
+}
+
+/*Option 4*/
+public static void listPublisher(){
+    
+}
+
 /*option 5*/
 public static void listAllBooks(){
 
