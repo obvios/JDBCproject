@@ -33,31 +33,10 @@ public class JDBC {
             displayMenu();
 
             //test1
-            listAllBooks();
-            //STEP 3: Execute a query
-            System.out.println("Creating statement...");
-            stmt = conn.createStatement();
-            String sql;
-            sql = "SELECT au_id, au_fname, au_lname, phone FROM Authors";
-            ResultSet rs = stmt.executeQuery(sql);
-
-            //STEP 4: Extract data from result set
-            while(rs.next()){
-                //Retrieve by column name
-                String id  = rs.getString("au_id");
-                String phone = rs.getString("phone");
-                String first = rs.getString("au_fname");
-                String last = rs.getString("au_lname");
-
-                //Display values
-                System.out.print("ID: " + id);
-                System.out.print(", First: " + first);
-                System.out.print(", Last: " + last);
-                System.out.println(", Phone: " + phone);
-            }
+            
             //STEP 5: Clean-up environment
-            rs.close();
-            stmt.close();
+           // rs.close();
+           //stmt.close();
             conn.close();
         }catch(SQLException se){
             se.printStackTrace();
@@ -107,6 +86,9 @@ public static void listAllBooks(){
         	    String name = rs.getString("bookTitle");
         	    System.out.println(name);
             }
+            /*Close*/
+            rs.close();
+            stmt.close();
         } catch (SQLException ex) {
             Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -138,7 +120,9 @@ public static void listAllBooks(){
                     System.out.print(", Group: "+group);
                     System.out.println(", Publisher: "+publisher);
             }
-            
+            /*Close*/
+            rs.close();
+            pstmt.close();
         } catch (SQLException ex) {
             Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
