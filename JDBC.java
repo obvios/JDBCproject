@@ -31,8 +31,6 @@ public class JDBC {
 
             /*Display Menu*/
             displayMenu();
-
-            //test1
             
             //STEP 5: Clean-up environment
            // rs.close();
@@ -129,6 +127,43 @@ public static void listAllBooks(){
         
     }
 
+    /*Option 7*/
+    public static void insertBook() throws IOException {
+        try{
+            String sql = "Insert into book(groupname,publishername,booktitle,yearpublished,numberpages) "
+                    + "values (?,?,?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            
+            //get info from user
+            System.out.print("Enter Group name: ");
+            String group = reader.readLine();
+            System.out.println();
+            System.out.print("Enter Publisher name: ");
+            String publisher = reader.readLine();
+            System.out.println();
+            
+            //check that publisher exists
+            String checkSQL = "select publishername from publisher where publishername = ?";
+            PreparedStatement checkPstmt = conn.prepareStatement(checkSQL);
+            ResultSet checkRS = checkPstmt.executeQuery();
+            if(checkRS.getString("publishername") == null){         //publisher doesnt exist so add it
+                
+            }
+            checkPstmt.clearParameters();
+            
+            //check that writing group exists
+            checkSQL = "select groupname from writinggroup where groupname = ?";
+            checkPstmt = conn.prepareStatement(checkSQL);
+            checkRS = checkPstmt.executeQuery();
+            if(checkRS.getString("groupname") == null){         //writing group doesnt exist so add it
+                
+            }
+            
+            //get rest of book info and insert into database
+        }catch(SQLException ex){
+            Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null,ex);
+        }
+    }
 
 //first 4 : daniel
 //last 5 : eric
