@@ -17,7 +17,7 @@ public class JDBC {
     static Connection conn = null;
     static Statement stmt = null;
     //buffered reader
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) {
 
@@ -106,7 +106,7 @@ public static void listAllBooks(){
             while (rs.next()) {
         	    String name = rs.getString("bookTitle");
         	    System.out.println(name);
-        	}
+            }
         } catch (SQLException ex) {
             Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -114,9 +114,35 @@ public static void listAllBooks(){
 }
 
 /*option 6*/
-    public static listBook(){
-        System.out.println("Which book would you like more information on? ");
-        String book = reader.readLine();
+    public static void listBook() throws IOException{
+        try {
+            String sql = "Select booktitle,yearpublished,numberpages,groupname,publishername from book where booktitle = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            
+            System.out.println("Which book would you like more information on? ");
+            String book = reader.readLine();
+            
+            pstmt.setString(1, book);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+        	    String name = rs.getString("bookTitle");
+                    String year = rs.getString("yearpublished");
+                    String pages = rs.getString("numberpages");
+                    String group = rs.getString("groupname");
+                    String publisher = rs.getString("publishername");
+                    
+        	    System.out.print("Name: " + name);
+                    System.out.print(", Year: "+year);
+                    System.out.print(", Pages: "+pages);
+                    System.out.print(", Group: "+group);
+                    System.out.println(", Publisher: "+publisher);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
 
