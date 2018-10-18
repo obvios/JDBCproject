@@ -31,7 +31,7 @@ public class JDBC {
 
             /*Display Menu*/
             displayMenu();
-            
+                        
             //STEP 5: Clean-up environment
            // rs.close();
            //stmt.close();
@@ -151,6 +151,14 @@ public static void listAllBooks(){
             System.out.print("Enter Publisher name: ");
             String publisher = reader.readLine();
             System.out.println();
+            System.out.print("Book Title: ");
+            String title = reader.readLine();
+            System.out.println();
+            System.out.print("Year: ");
+            String year = reader.readLine();
+            System.out.println("Pages: ");
+            String pages = reader.readLine();
+      
             
             //check that publisher exists
             String checkSQL = "select publishername from publisher where publishername = ?";
@@ -169,7 +177,15 @@ public static void listAllBooks(){
                 
             }
             
-            //get rest of book info and insert into database
+            
+            //insert book
+            pstmt.setString(1, group);
+            pstmt.setString(2, publisher);
+            pstmt.setString(3, title);
+            pstmt.setString(4, year);
+            pstmt.setString(5, pages);
+            
+            pstmt.executeUpdate();
         }catch(SQLException ex){
             Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null,ex);
         }
