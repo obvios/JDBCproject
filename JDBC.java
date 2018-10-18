@@ -96,7 +96,7 @@ public static void listAllBooks(){
 /*option 6*/
     public static void listBook() throws IOException{
         try {
-            String sql = "Select booktitle,yearpublished,numberpages,groupname,publishername from book where booktitle = ? and "
+            String sql = "Select * from book natural join writinggroup natural join publisher where booktitle = ? and "
                     + "groupname = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             
@@ -113,14 +113,20 @@ public static void listAllBooks(){
         	    String name = rs.getString("bookTitle");
                     String year = rs.getString("yearpublished");
                     String pages = rs.getString("numberpages");
-                    String group = rs.getString("groupname");
-                    String publisher = rs.getString("publishername");
                     
-        	    System.out.print("Name: " + name);
-                    System.out.print(", Year: "+year);
-                    System.out.print(", Pages: "+pages);
-                    System.out.print(", Group: "+group);
-                    System.out.println(", Publisher: "+publisher);
+                    String group = rs.getString("groupname");
+                    String subj = rs.getString("subject");
+                    String headWriter = rs.getString("headwriter");
+                    String yrFormed = rs.getString("yearformed");
+                    
+                    String publisher = rs.getString("publishername");
+                    String pubAdd = rs.getString("publisheraddress");
+                    String pubPhone = rs.getString("publisherphone");
+                    String pubEmail = rs.getString("publisheremail");
+                    
+        	    System.out.println("Title: " + name + ", Year: " + year + ", Pages: " + pages + 
+                            "\nGroup: " + group + ", Subject: " + subj + ", Head Writer: " + headWriter + ", Year Formed: " + yrFormed +
+                            "\nPublisher: " + publisher + ", Address: " + pubAdd + ", Phone: " + pubPhone + ", Email: " + pubEmail);
             }
             /*Close*/
             rs.close();
