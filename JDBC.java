@@ -32,8 +32,8 @@ public class JDBC {
             /*Display Menu*/
             displayMenu();
             
-            //test
-                        
+            //test    
+            
             //STEP 5: Clean-up environment
             conn.close();
         }catch(SQLException se){
@@ -311,8 +311,26 @@ public static void listAllBooks(){
     }
 
     /*option 9*/
-    public static void removeBook(){
-        
+    public static void removeBook() throws IOException{
+        try{
+            //get book info from user
+            String sql = "DELETE FROM book WHERE booktitle = ? AND groupname = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            System.out.print("Enter Book title: ");
+            String title = reader.readLine();
+            System.out.print("Enter Group name: ");
+            String group = reader.readLine();
+            
+            //execute update
+            pstmt.setString(1, title);
+            pstmt.setString(2, group);
+            pstmt.executeUpdate();
+            
+            //close
+            pstmt.close();
+        }catch (SQLException ex){
+            Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null,ex);
+        }
     }
 //first 4 : daniel
 //last 5 : eric
