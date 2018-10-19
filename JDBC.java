@@ -310,6 +310,10 @@ public static void listAllBooks(){
         }
     }
 
+    /*option 9*/
+    public static void removeBook(){
+        
+    }
 //first 4 : daniel
 //last 5 : eric
 
