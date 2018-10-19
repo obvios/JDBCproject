@@ -19,7 +19,7 @@ public class JDBC {
     //buffered reader
     static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         try{
             //STEP 1: Register JDBC driver
@@ -32,7 +32,37 @@ public class JDBC {
             /*Display Menu*/
             displayMenu();
             
-            //test    
+            /*Main Loop*/
+            int option = Integer.parseInt(reader.readLine());
+            
+            while(option !=0){
+                switch(option){
+                    case 1: listAllWritingGroups();
+                    break;
+                    case 2 : listWritingGroup();
+                    break;
+                    case 3 : listAllPublishers();
+                    break;
+                    case 4 : listPublisher();
+                    break;
+                    case 5 : listAllBooks();
+                    break;
+                    case 6 : listBook();
+                    break;
+                    case 7 : insertBook();
+                    break;
+                    case 8 : insertAndUpdatePub();
+                    break;
+                    case 9 : removeBook();
+                    break;
+                    default : System.out.println("good bye!");
+                    break;
+                }
+                
+                
+                displayMenu();
+                option = Integer.parseInt(reader.readLine());
+            }
             
             //STEP 5: Clean-up environment
             conn.close();
@@ -70,6 +100,7 @@ static void displayMenu(){
     System.out.println("7: Insert a new book into database");
     System.out.println("8: Insert new publisher and change ownership");
     System.out.println("9: Remove a specific book");
+    System.out.print("Enter number or 0 to exit: ");
 }
 
 /*Option 1*/
