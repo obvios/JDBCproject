@@ -196,8 +196,9 @@ public static void listAllBooks(){
             System.out.println();
             System.out.print("Year: ");
             String year = reader.readLine();
-            System.out.println("Pages: ");
+            System.out.print("Pages: ");
             String pages = reader.readLine();
+            System.out.println();
       
             //check that writing group exists
             String checkSQL = "select groupname from writinggroup where groupname = ?";
@@ -230,6 +231,36 @@ public static void listAllBooks(){
             pstmt.setString(5, pages);
             
             pstmt.executeUpdate();
+        }catch(SQLException ex){
+            Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null,ex);
+        }
+    }
+    
+    /*Option 8*/
+    public static void insertAndUpdatePub() throws IOException {
+        try{
+            //get info from user
+            System.out.print("Enter new Publisher name: ");
+            String newPub = reader.readLine();
+            System.out.print("Enter new Publisher address: ");
+            String newAdd = reader.readLine();
+            System.out.print("Enter new Publisher phone: ");
+            String newPhone = reader.readLine();
+            System.out.print("Enter new Publisher email: ");
+            String newEmail = reader.readLine();
+            System.out.print("Enter old Publisher name: ");
+            String oldPub = reader.readLine();
+            
+            //Insert new publisher
+            String sql = "INSERT INTO publisher (publishername,publisheraddress,publisherphone,publisheremail) VALUES "
+                    + "(?,?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newPub);
+            pstmt.setString(2, newAdd);
+            pstmt.setString(3, newPhone);
+            pstmt.setString(4, newEmail);
+            
+            //update and change ownership
         }catch(SQLException ex){
             Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null,ex);
         }
