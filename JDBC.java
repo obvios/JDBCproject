@@ -184,7 +184,7 @@ public static void listAllBooks(){
             PreparedStatement checkPstmt = conn.prepareStatement(checkSQL);
             ResultSet checkRS = checkPstmt.executeQuery();
             if(checkRS.getString("publishername") == null){         //publisher doesnt exist so add it
-                
+                System.out.println("publisher doensn't exist");
             }
             checkPstmt.clearParameters();
             
@@ -193,7 +193,7 @@ public static void listAllBooks(){
             checkPstmt = conn.prepareStatement(checkSQL);
             checkRS = checkPstmt.executeQuery();
             if(checkRS.getString("groupname") == null){         //writing group doesnt exist so add it
-                
+                System.out.println("publisher doesn't exist");
             }
             
             
