@@ -83,6 +83,24 @@ public static void listWritingGroup(){
 
 /*Option 3*/
 public static void listAllPublishers(){
+    try{
+        String sq1 = "SELECT PublisherName FROM Publisher";
+        stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sq1);
+        
+        while(rs.next())
+        {
+            System.out.println(rs.getString("PublisherName"));
+        }
+        /*Close*/
+        rs.close();
+        stmt.close();
+        
+    }
+    catch(SQLException ex)
+    {
+        Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE,null, ex);
+    }
     
 }
 
