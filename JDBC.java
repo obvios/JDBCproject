@@ -31,6 +31,9 @@ public class JDBC {
 
             /*Display Menu*/
             displayMenu();
+            
+            //test
+            insertBook();
                         
             //STEP 5: Clean-up environment
             conn.close();
@@ -196,23 +199,27 @@ public static void listAllBooks(){
             System.out.println("Pages: ");
             String pages = reader.readLine();
       
-            
-            //check that publisher exists
-            String checkSQL = "select publishername from publisher where publishername = ?";
+            //check that writing group exists
+            String checkSQL = "select groupname from writinggroup where groupname = ?";
             PreparedStatement checkPstmt = conn.prepareStatement(checkSQL);
+            checkPstmt.setString(1, group);
             ResultSet checkRS = checkPstmt.executeQuery();
-            if(checkRS.getString("publishername") == null){         //publisher doesnt exist so add it
-                System.out.println("publisher doensn't exist");
+            if(!checkRS.next()){         //writing group doesnt exist so add it
+                System.out.println("WARNING: writing group doesn't exist");
+                return;
             }
             checkPstmt.clearParameters();
             
-            //check that writing group exists
-            checkSQL = "select groupname from writinggroup where groupname = ?";
+            //check that publisher exists
+            checkSQL = "select publishername from publisher where publishername = ?";
             checkPstmt = conn.prepareStatement(checkSQL);
+            checkPstmt.setString(1, publisher);
             checkRS = checkPstmt.executeQuery();
-            if(checkRS.getString("groupname") == null){         //writing group doesnt exist so add it
-                System.out.println("publisher doesn't exist");
+            if(!checkRS.next()){         //publisher doesnt exist so add it
+                System.out.println("WARNING: publisher doensn't exist");
+                return;
             }
+            
             
             
             //insert book
