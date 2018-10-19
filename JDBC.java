@@ -33,7 +33,6 @@ public class JDBC {
             displayMenu();
             
             //test
-            insertBook();
                         
             //STEP 5: Clean-up environment
             conn.close();
@@ -231,6 +230,11 @@ public static void listAllBooks(){
             pstmt.setString(5, pages);
             
             pstmt.executeUpdate();
+            
+            /*close*/
+            pstmt.close();
+            checkPstmt.close();
+            checkRS.close();
         }catch(SQLException ex){
             Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null,ex);
         }
@@ -259,8 +263,48 @@ public static void listAllBooks(){
             pstmt.setString(2, newAdd);
             pstmt.setString(3, newPhone);
             pstmt.setString(4, newEmail);
+            pstmt.executeUpdate();
+            
+            //check if old publisher exists
+            String checkSQL = "select publishername from publisher where publishername = ?";
+            PreparedStatement checkPstmt = conn.prepareStatement(checkSQL);
+            checkPstmt.setString(1, oldPub);
+            ResultSet checkRS = checkPstmt.executeQuery();
+            if(!checkRS.next()){         //old publisher doesn't exist
+                System.out.println("WARNING: old publisher invalid");
+                return;
+            }
             
             //update and change ownership
+            sql = "UPDATE book SET publishername = ? where publishername = ?";
+            pstmt.clearParameters();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newPub);
+            pstmt.setString(2, oldPub);
+            pstmt.executeUpdate();
+            pstmt.clearParameters();
+            
+            //print all info of books whose ownership changed
+            sql = "select * from book where publishername = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newPub);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                String group = rs.getString("groupname");
+                String publisher = rs.getString("publishername");
+                String title = rs.getString("booktitle");
+                String yr = rs.getString("yearpublished");
+                String pages = rs.getString("numberpages");
+                
+                System.out.println("Group: " + group + ", Publisher: " + publisher + ", Title: "
+                + title + " Year: " + yr + ", Pages: " + pages);
+            }
+            
+            /*close*/
+            pstmt.close();
+            rs.close();
+            checkRS.close();
+            checkPstmt.close();
         }catch(SQLException ex){
             Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE, null,ex);
         }
