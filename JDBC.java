@@ -105,7 +105,24 @@ static void displayMenu(){
 
 /*Option 1*/
 public static void listAllWritingGroups(){
-    
+    try{
+        String sql = "SELECT GroupName FROM WritingGroup";
+        stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        
+        while(rs.next())
+        {
+            System.out.println(rs.getString("GroupName"));
+        }
+        /*Close*/
+        rs.close();
+        stmt.close();
+        
+    }
+    catch(SQLException ex)
+    {
+        Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE,null,ex);
+    }
 }
 
 /*Option 2*/
