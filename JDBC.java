@@ -126,7 +126,19 @@ public static void listAllWritingGroups(){
 }
 
 /*Option 2*/
-public static void listWritingGroup(){
+public static void listWritingGroup() throws IOException{
+    try{
+        String sql = "SELECT * FROM WritingGroup natural join publisher natural join book WHERE PublisherName = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        System.out.println("Which writing group would you like to know more about?");
+        String writingGroup = reader.readLine();
+        
+        
+    }
+    catch(SQLException ex)
+    {
+        Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE,null, ex);
+    }
     
 }
 

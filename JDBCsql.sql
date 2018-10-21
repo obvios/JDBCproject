@@ -146,7 +146,7 @@ values
 ),
 ('Romantic Readers', 'Maximillion', 'Lady in Velvet', 1899, 921
 ),
-('Writers on Strike', 'Pearcin',' Romances all Wrong',1900, 900
+('Writers on Strike', 'Pearcin','Romances all Wrong',1900, 900
 ),
 ('Livid Linguists', 'HappierCollins','A World Without Love', 1975, 900
 ),
