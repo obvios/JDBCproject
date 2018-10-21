@@ -128,10 +128,32 @@ public static void listAllWritingGroups(){
 /*Option 2*/
 public static void listWritingGroup() throws IOException{
     try{
-        String sql = "SELECT * FROM WritingGroup natural join publisher natural join book WHERE PublisherName = ?";
+        String sql = "SELECT * FROM WritingGroup natural join book WHERE GroupName = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         System.out.println("Which writing group would you like to know more about?");
         String writingGroup = reader.readLine();
+        pstmt.setString(1, writingGroup);
+        
+        ResultSet rs = pstmt.executeQuery();
+        
+            rs.next();
+            String gName = rs.getString("GroupName");
+            String headWriter = rs.getString("HeadWriter");
+            String year = rs.getString("YearFormed");
+            String subject = rs.getString("Subject");
+            String book = rs.getString("BookTitle") + ", ";
+            while(rs.next())
+            {
+             book += rs.getString("BookTitle") + ", ";
+            }
+            
+            System.out.println("Group Name: " + gName + ", Head Writer: " + headWriter + ", Year: " + year + ", Subject: " + subject);
+            System.out.println("Book Titles: " + book.substring(0,book.length()-2));
+            
+        
+        /*Close*/
+        rs.close();
+        pstmt.close();
         
         
     }
