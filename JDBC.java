@@ -128,7 +128,7 @@ public static void listAllWritingGroups(){
 /*Option 2*/
 public static void listWritingGroup() throws IOException{
     try{
-        String sql = "SELECT * FROM WritingGroup natural join book WHERE GroupName = ?";
+        String sql = "SELECT * FROM WritingGroup natural join publisher natural join book WHERE GroupName = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         System.out.println("Which writing group would you like to know more about?");
         String writingGroup = reader.readLine();
@@ -141,13 +141,26 @@ public static void listWritingGroup() throws IOException{
             String headWriter = rs.getString("HeadWriter");
             String year = rs.getString("YearFormed");
             String subject = rs.getString("Subject");
+            
             String book = rs.getString("BookTitle") + ", ";
-            while(rs.next())
-            {
-             book += rs.getString("BookTitle") + ", ";
-            }
+            
+            String pubName = rs.getString("PublisherName");
+            String pubAddress= rs.getString("PublisherAddress");
+            String pubPhone = rs.getString("PublisherPhone");
+            String pubEmail = rs.getString("PublisherEmail");
+            
+            
+           
             
             System.out.println("Group Name: " + gName + ", Head Writer: " + headWriter + ", Year: " + year + ", Subject: " + subject);
+            int i = 1;
+            System.out.println("Publisher 1: " + pubName + ", Publisher Address: " + pubAddress + ", Publisher Phone: " + pubPhone + ", Publisher Email: " + pubEmail);
+             while(rs.next())
+            {
+             book += rs.getString("BookTitle") + ", ";
+             System.out.println("Publisher " + ++i + ": " + rs.getString("PublisherName") + ", Publisher Address: " + rs.getString("PublisherAddress") + ", Publisher Phone: " + rs.getString("PublisherPhone") + ", Publisher Email: " + rs.getString("PublisherEmail"));
+            }
+            
             System.out.println("Book Titles: " + book.substring(0,book.length()-2));
             
         
@@ -189,8 +202,31 @@ public static void listAllPublishers(){
 }
 
 /*Option 4*/
-public static void listPublisher(){
-    
+public static void listPublisher() throws IOException{
+    try{
+        String sql = "Select * from publisher join book where PublisherName = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        System.out.println("What publisher would you like to learn more about?");
+        String publisher = reader.readLine();
+        pstmt.setString(1, publisher);
+        
+        ResultSet rs = pstmt.executeQuery();
+        
+        rs.next();
+        String pubName = rs.getString("PublisherName");
+        String address = rs.getString("PublisherAddress");
+        String phone = rs.getString("PublisherPhone");
+        String email = rs.getString("PublisherEmail");
+        String books = rs.getString("BookTitle") + ", ";
+        while(rs.next())
+        {
+            
+        }
+    }
+    catch(SQLException ex)
+    {
+        Logger.getLogger(JDBC.class.getName()).log(Level.SEVERE,null, ex);
+    }
 }
 
 /*option 5*/
