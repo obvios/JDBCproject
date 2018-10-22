@@ -142,26 +142,24 @@ public static void listWritingGroup() throws IOException{
             String year = rs.getString("YearFormed");
             String subject = rs.getString("Subject");
             
-            String book = rs.getString("BookTitle") + ", ";
+            System.out.println("Writing Group: " + gName + ", Head Writer: " + headWriter + ", Year Formed: " + year +", Subject: " + subject);
+            
+            do{
+            String bookTitle = rs.getString("BookTitle") + ", ";
+            String yearWritten = rs.getString("YearPublished");
+            String numberPages = rs.getString("NumberPages");
             
             String pubName = rs.getString("PublisherName");
             String pubAddress= rs.getString("PublisherAddress");
             String pubPhone = rs.getString("PublisherPhone");
             String pubEmail = rs.getString("PublisherEmail");
             
+            System.out.println("Book Title: " + bookTitle + ", Year Published: " + yearWritten + ", Number of Pages: " + numberPages + ", Written by: " + gName);
+            System.out.println("Publisher: " + pubName + ", Publisher Address: " + pubAddress + ", Publisher Phone: " + pubPhone + ", Publisher Email: " + pubEmail);
+            }while (rs.next());
             
            
-            
-            System.out.println("Group Name: " + gName + ", Head Writer: " + headWriter + ", Year: " + year + ", Subject: " + subject);
-            int i = 1;
-            System.out.println("Publisher 1: " + pubName + ", Publisher Address: " + pubAddress + ", Publisher Phone: " + pubPhone + ", Publisher Email: " + pubEmail);
-             while(rs.next())
-            {
-             book += rs.getString("BookTitle") + ", ";
-             System.out.println("Publisher " + ++i + ": " + rs.getString("PublisherName") + ", Publisher Address: " + rs.getString("PublisherAddress") + ", Publisher Phone: " + rs.getString("PublisherPhone") + ", Publisher Email: " + rs.getString("PublisherEmail"));
-            }
-            
-            System.out.println("Book Titles: " + book.substring(0,book.length()-2));
+          
             
         
         /*Close*/
@@ -204,7 +202,7 @@ public static void listAllPublishers(){
 /*Option 4*/
 public static void listPublisher() throws IOException{
     try{
-        String sql = "Select * from publisher join book where PublisherName = ?";
+        String sql = "Select * from publisher natural join WritingGroup natural join book where PublisherName = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         System.out.println("What publisher would you like to learn more about?");
         String publisher = reader.readLine();
@@ -217,11 +215,29 @@ public static void listPublisher() throws IOException{
         String address = rs.getString("PublisherAddress");
         String phone = rs.getString("PublisherPhone");
         String email = rs.getString("PublisherEmail");
-        String books = rs.getString("BookTitle") + ", ";
-        while(rs.next())
-        {
-            
-        }
+        
+        System.out.println("Publisher: " + pubName + ", Publisher Address: " + address + ", Publisher Phone: " + phone + ", Publisher Email: " + email);
+        
+        do{
+        String groupName = rs.getString("GroupName");
+        String headWriter = rs.getString("HeadWriter");
+        String year = rs.getString("YearFormed");
+        String subject = rs.getString("Subject");
+        
+        String bookTitle = rs.getString("BookTitle");
+        String yearWritten = rs.getString("YearPublished");
+        String numberPages = rs.getString("NumberPages");
+        
+        System.out.println("Book Title: " + bookTitle + ", Year Published: " + yearWritten + ", Number of Pages: " + numberPages + ", Written by: " + groupName);
+        System.out.println("Writing Group: " + groupName + ", Head Writer: " + headWriter + ", Year Formed: " + year +", Subject: " + subject);
+        
+        }while( rs.next());
+        /*Close*/
+        rs.close();
+        pstmt.close();
+       
+        
+        
     }
     catch(SQLException ex)
     {
