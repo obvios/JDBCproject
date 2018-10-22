@@ -33,7 +33,14 @@ public class JDBC {
             displayMenu();
             
             /*Main Loop*/
-            int option = Integer.parseInt(reader.readLine());
+            int option;
+            String option1 = reader.readLine();
+            if(Character.isDigit(option1.charAt(0))){
+                option = Integer.parseInt(option1);
+            }else{
+                option = 10;
+            }
+            
             
             while(option !=0){
                 switch(option){
@@ -54,14 +61,20 @@ public class JDBC {
                     case 8 : insertAndUpdatePub();
                     break;
                     case 9 : removeBook();
+                    listAllBooks();
                     break;
-                    default : System.out.println("good bye!");
+                    default : System.out.println("Not an option");
                     break;
                 }
                 
                 
                 displayMenu();
-                option = Integer.parseInt(reader.readLine());
+                option1 = reader.readLine();
+                if(Character.isDigit(option1.charAt(0))){
+                    option = Integer.parseInt(option1);
+                }else{
+                    option = 10;
+                }
             }
             
             //STEP 5: Clean-up environment
@@ -354,7 +367,16 @@ public static void listAllBooks(){
                 return;
             }
             
-            
+            /*Check if writing group and title already exist*/
+            checkSQL = "SELECT * FROM book WHERE booktitle = ? AND groupname = ?";
+            checkPstmt = conn.prepareStatement(checkSQL);
+            checkPstmt.setString(1, title);
+            checkPstmt.setString(2, group);
+            checkRS = checkPstmt.executeQuery();
+            if(checkRS.next()){         //book and group already exist
+                System.out.println("WARNING: book already exists");
+                return;
+            }
             
             //insert book
             pstmt.setString(1, group);
