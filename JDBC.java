@@ -136,15 +136,12 @@ public static void listWritingGroup() throws IOException{
         
         ResultSet rs = pstmt.executeQuery();
         
-            rs.next();
+            if(rs.next()){
             String gName = rs.getString("GroupName");
             String headWriter = rs.getString("HeadWriter");
             String year = rs.getString("YearFormed");
             String subject = rs.getString("Subject");
             
-            System.out.println("Writing Group: " + gName + ", Head Writer: " + headWriter + ", Year Formed: " + year +", Subject: " + subject);
-            
-            do{
             String bookTitle = rs.getString("BookTitle") + ", ";
             String yearWritten = rs.getString("YearPublished");
             String numberPages = rs.getString("NumberPages");
@@ -154,9 +151,25 @@ public static void listWritingGroup() throws IOException{
             String pubPhone = rs.getString("PublisherPhone");
             String pubEmail = rs.getString("PublisherEmail");
             
+            System.out.println("Writing Group: " + gName + ", Head Writer: " + headWriter + ", Year Formed: " + year +", Subject: " + subject);
             System.out.println("Book Title: " + bookTitle + ", Year Published: " + yearWritten + ", Number of Pages: " + numberPages + ", Written by: " + gName);
             System.out.println("Publisher: " + pubName + ", Publisher Address: " + pubAddress + ", Publisher Phone: " + pubPhone + ", Publisher Email: " + pubEmail);
-            }while (rs.next());
+
+            }
+            while(rs.next())
+            {
+            String bookTitle = rs.getString("BookTitle") + ", ";
+            String yearWritten = rs.getString("YearPublished");
+            String numberPages = rs.getString("NumberPages");
+            
+            String pubName = rs.getString("PublisherName");
+            String pubAddress= rs.getString("PublisherAddress");
+            String pubPhone = rs.getString("PublisherPhone");
+            String pubEmail = rs.getString("PublisherEmail");
+            
+            System.out.println("Book Title: " + bookTitle + ", Year Published: " + yearWritten + ", Number of Pages: " + numberPages);
+            System.out.println("Publisher: " + pubName + ", Publisher Address: " + pubAddress + ", Publisher Phone: " + pubPhone + ", Publisher Email: " + pubEmail);
+            }
             
            
           
@@ -210,15 +223,33 @@ public static void listPublisher() throws IOException{
         
         ResultSet rs = pstmt.executeQuery();
         
-        rs.next();
+        if(rs.next())
+        {
         String pubName = rs.getString("PublisherName");
         String address = rs.getString("PublisherAddress");
         String phone = rs.getString("PublisherPhone");
         String email = rs.getString("PublisherEmail");
         
-        System.out.println("Publisher: " + pubName + ", Publisher Address: " + address + ", Publisher Phone: " + phone + ", Publisher Email: " + email);
+        String groupName = rs.getString("GroupName");
+        String headWriter = rs.getString("HeadWriter");
+        String year = rs.getString("YearFormed");
+        String subject = rs.getString("Subject");
         
-        do{
+        String bookTitle = rs.getString("BookTitle");
+        String yearWritten = rs.getString("YearPublished");
+        String numberPages = rs.getString("NumberPages");
+        
+        System.out.println("Publisher: " + pubName + ", Publisher Address: " + address + ", Publisher Phone: " + phone + ", Publisher Email: " + email);
+        System.out.println("Book Title: " + bookTitle + ", Year Published: " + yearWritten + ", Number of Pages: " + numberPages + ", Written by: " + groupName);
+        System.out.println("Writing Group: " + groupName + ", Head Writer: " + headWriter + ", Year Formed: " + year +", Subject: " + subject);
+        }
+       
+        
+        
+        while(rs.next())
+        {
+        
+        
         String groupName = rs.getString("GroupName");
         String headWriter = rs.getString("HeadWriter");
         String year = rs.getString("YearFormed");
@@ -231,7 +262,7 @@ public static void listPublisher() throws IOException{
         System.out.println("Book Title: " + bookTitle + ", Year Published: " + yearWritten + ", Number of Pages: " + numberPages + ", Written by: " + groupName);
         System.out.println("Writing Group: " + groupName + ", Head Writer: " + headWriter + ", Year Formed: " + year +", Subject: " + subject);
         
-        }while( rs.next());
+        }
         /*Close*/
         rs.close();
         pstmt.close();
